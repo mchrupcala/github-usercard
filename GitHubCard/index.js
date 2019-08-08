@@ -3,6 +3,20 @@
            https://api.github.com/users/<your name>
 */
 
+//////////////////////////////////////////////////
+axios.get('https://api.github.com/users/mchrupcala')
+  .then( response => {
+    let card = createCard(response.data);
+    let container = document.querySelector('.cards');
+    container.appendChild(card);
+  })
+  .catch( error =>{
+    console.log(error);
+  })
+
+
+
+
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
    data in order to use it to build your component function 
@@ -24,7 +38,21 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+//////////////////////////////////////////////////
+// const followersArray = ['stlachman', 'MSquared88', 'NicholasInterest1', 'EpiceneDev', 'nomadkitty', 'briannakeune', 'allisonkydy', 'brandonharris177'];
+
+// for (let i = 0; i < followersArray.length; i++) {
+//   axios.get(`https://api.github.com/users/${followersArray[i]}`)
+//   .then( response => {
+//     let card = createCard(response.data);
+//     let container = document.querySelector('.cards');
+//     container.appendChild(card);
+//   })
+//   .catch( error =>{
+//     console.log(error);
+//   })
+// }
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -46,6 +74,58 @@ const followersArray = [];
 
 */
 
+function createCard(obj) {
+
+  //Create the HTML tags
+  const card = document.createElement('div');
+  const userImage = document.createElement('img');
+  const cardInfo = document.createElement('div');
+  const nameHeader = document.createElement('h3');
+  const userName = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const profileLink = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const userBio = document.createElement('p');
+
+  //Append to the correct elements for styling.
+  card.appendChild(userImage);
+  card.appendChild(cardInfo);
+  cardInfo.appendChild(nameHeader);
+  cardInfo.appendChild(userName);
+  cardInfo.appendChild(location);
+  cardInfo.appendChild(profile);
+  profile.appendChild(profileLink);
+  cardInfo.appendChild(followers);
+  cardInfo.appendChild(following);
+  cardInfo.appendChild(userBio);
+
+  //Add class names to the HTML tags.
+  card.classList.add('card');
+  cardInfo.classList.add('card-info');
+  nameHeader.classList.add('name');
+  userName.classList.add('username');
+
+
+  // Pass object values into the component at the correct variables.
+  userImage.src = obj.avatar_url;
+  nameHeader.textContent = obj.name;
+  userName.textContent = obj.login;
+  location.textContent = `Location: ${obj.location}`;
+  profile.textContent = obj.html_url;
+  followers.textContent = `Followers: ${obj.followers}`;
+  following.textContent = `Following: ${obj.following}`;
+  userBio.textContent = `Bio: ${obj.bio}`;
+
+  //Seth how would I add a conditional statement to the template literalls on lines 115 and 119? Something like "If there's no bio, say N/A"
+
+  return card;
+}
+
+// console.log(createCard);
+// createCard(data);
+
 /* List of LS Instructors Github username's: 
   tetondan
   dustinmyers
@@ -53,3 +133,18 @@ const followersArray = [];
   luishrd
   bigknell
 */
+
+//Stretch Goals
+
+axios.get('https://api.github.com/users/mchrupcala/followers')
+  .then( response => {
+    console.log(response);
+    response.data.forEach( e => {
+      let card = createCard(e);
+      let container = document.querySelector('.cards');
+      container.appendChild(card);
+    })
+  })
+  .catch( error =>{
+    console.log(error);
+  })
