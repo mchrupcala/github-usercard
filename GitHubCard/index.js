@@ -3,6 +3,7 @@
            https://api.github.com/users/<your name>
 */
 
+//////////////////////////////////////////////////
 axios.get('https://api.github.com/users/mchrupcala')
   .then( response => {
     let card = createCard(response.data);
@@ -37,19 +38,20 @@ axios.get('https://api.github.com/users/mchrupcala')
           user, and adding that card to the DOM.
 */
 
-const followersArray = ['stlachman', 'MSquared88', 'NicholasInterest1', 'EpiceneDev', 'nomadkitty', 'briannakeune', 'allisonkydy', 'brandonharris177'];
+//////////////////////////////////////////////////
+// const followersArray = ['stlachman', 'MSquared88', 'NicholasInterest1', 'EpiceneDev', 'nomadkitty', 'briannakeune', 'allisonkydy', 'brandonharris177'];
 
-for (let i = 0; i < followersArray.length; i++) {
-  axios.get(`https://api.github.com/users/${followersArray[i]}`)
-  .then( response => {
-    let card = createCard(response.data);
-    let container = document.querySelector('.cards');
-    container.appendChild(card);
-  })
-  .catch( error =>{
-    console.log(error);
-  })
-}
+// for (let i = 0; i < followersArray.length; i++) {
+//   axios.get(`https://api.github.com/users/${followersArray[i]}`)
+//   .then( response => {
+//     let card = createCard(response.data);
+//     let container = document.querySelector('.cards');
+//     container.appendChild(card);
+//   })
+//   .catch( error =>{
+//     console.log(error);
+//   })
+// }
 
 
 /* Step 3: Create a function that accepts a single object as its only argument,
@@ -110,11 +112,13 @@ function createCard(obj) {
   userImage.src = obj.avatar_url;
   nameHeader.textContent = obj.name;
   userName.textContent = obj.login;
-  location.textContent = obj.location;
+  location.textContent = `Location: ${obj.location}`;
   profile.textContent = obj.html_url;
   followers.textContent = `Followers: ${obj.followers}`;
   following.textContent = `Following: ${obj.following}`;
-  userBio.textContent = obj.bio;
+  userBio.textContent = `Bio: ${obj.bio}`;
+
+  //Seth how would I add a conditional statement to the template literalls on lines 115 and 119? Something like "If there's no bio, say N/A"
 
   return card;
 }
@@ -129,3 +133,18 @@ function createCard(obj) {
   luishrd
   bigknell
 */
+
+//Stretch Goals
+
+axios.get('https://api.github.com/users/mchrupcala/followers')
+  .then( response => {
+    console.log(response);
+    response.data.forEach( e => {
+      let card = createCard(e);
+      let container = document.querySelector('.cards');
+      container.appendChild(card);
+    })
+  })
+  .catch( error =>{
+    console.log(error);
+  })
