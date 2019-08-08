@@ -5,48 +5,16 @@
 
 axios.get('https://api.github.com/users/mchrupcala')
   .then( response => {
-    const card = createCard(response.data);
-    const container = document.querySelector('.cards');
+    let card = createCard(response.data);
+    let container = document.querySelector('.cards');
     container.appendChild(card);
   })
   .catch( error =>{
     console.log(error);
   })
 
-/*
- const data = avatar_url: "https://avatars0.githubusercontent.com/u/52679312?v=4"
- bio: null
- blog: ""
- company: null
- created_at: "2019-07-08T21:08:26Z"
- email: null
- events_url: "https://api.github.com/users/mchrupcala/events{/privacy}"
- followers: 19
- followers_url: "https://api.github.com/users/mchrupcala/followers"
- following: 26
- following_url: "https://api.github.com/users/mchrupcala/following{/other_user}"
- gists_url: "https://api.github.com/users/mchrupcala/gists{/gist_id}"
- gravatar_id: ""
- hireable: null
- html_url: "https://github.com/mchrupcala"
- id: 52679312
- location: null
- login: "mchrupcala"
- name: "Michael"
- node_id: "MDQ6VXNlcjUyNjc5MzEy"
- organizations_url: "https://api.github.com/users/mchrupcala/orgs"
- public_gists: 0
- public_repos: 22
- received_events_url: "https://api.github.com/users/mchrupcala/received_events"
- repos_url: "https://api.github.com/users/mchrupcala/repos"
- site_admin: false
- starred_url: "https://api.github.com/users/mchrupcala/starred{/owner}{/repo}"
- subscriptions_url: "https://api.github.com/users/mchrupcala/subscriptions"
- type: "User"
- updated_at: "2019-07-17T23:34:23Z"
- url: "https://api.github.com/users/mchrupcala"   */
 
-//  console.log(data);
+
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -69,7 +37,20 @@ axios.get('https://api.github.com/users/mchrupcala')
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['stlachman', 'MSquared88', 'NicholasInterest1', 'EpiceneDev', 'nomadkitty', 'briannakeune', 'allisonkydy', 'brandonharris177'];
+
+for (let i = 0; i < followersArray.length; i++) {
+  axios.get(`https://api.github.com/users/${followersArray[i]}`)
+  .then( response => {
+    let card = createCard(response.data);
+    let container = document.querySelector('.cards');
+    container.appendChild(card);
+  })
+  .catch( error =>{
+    console.log(error);
+  })
+}
+
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
